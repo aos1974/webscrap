@@ -13,7 +13,9 @@ FRESHPAGE_LINK = '/ru/all/'
 
 # парсер для страницы habr.com
 def habr_parser(txt: str):
-    pass
+    # начинаем обработку страницы с помощью методов библиотеки BeautifulSoup
+    soup = BeautifulSoup(txt,'html.parser')
+    print(soup.text)
 
 # Главная функция программы
 
