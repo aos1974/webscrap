@@ -1,0 +1,3 @@
+https://pypi.org/project/fake-headers/
+https://github.com/diwu1989/Fake-Headers
+https://habr.com/ru/company/ods/blog/346632/
