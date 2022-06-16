@@ -8,14 +8,30 @@ from bs4 import BeautifulSoup
 
 MAINPAGE_LINK = 'https://habr.com'
 FRESHPAGE_LINK = '/ru/all/'
+KEYWORDS = ['.NET *', 'C# *', 'Go *', 'PHP *', 'Python *']
 
 # Функции используемые в программе
 
-# парсер для страницы habr.com
+# функция парсера для страницы habr.com
 def habr_parser(txt: str):
+    
     # начинаем обработку страницы с помощью методов библиотеки BeautifulSoup
     soup = BeautifulSoup(txt,'html.parser')
-    print(soup.text)
+    # ищем все статьи на странице
+    articles = soup.findAll('article')
+    # в каждой найденной статье ищем необходимые нам атрибуты
+    for article in articles:
+        # получаем Тэги статьи
+        article_hubs = article.find_all('a', class_='tm-article-snippet__hubs-item-link')
+        # если статья нужной нам темы выводим информацию
+        for article_hub in article_hubs:
+            if article_hub.text in KEYWORDS:
+                article_time = article.find('time')
+                print(article_time.attrs['title'], end=' ')
+                article_href = article.find('a', class_='tm-article-snippet__title-link')
+                print(article_href.text, end=' ')
+                print(MAINPAGE_LINK + article_href.attrs['href'])
+# end habr_parser
 
 # Главная функция программы
 
@@ -33,6 +49,7 @@ def main():
         print(f'Ошибка выполнения запроса к сайту {page_link}.')
         print(f'Код ошибки: {response.status_code}')
         exit
+# end main
 
 # Основная программа
 
